@@ -48,13 +48,22 @@ const Withdrawal = () => {
       && balances[selectedTokenIdx] >= tokenAmount
       && !withdrawalIsLoading
 
+      const strToBigint = (str: string, decimals: number) => {
+        str = str[str.length-1] === "." ? str + "5" : str
+        try {
+          return parseUnits(str, decimals)
+        } catch { 
+          return BigInt(0)
+        }
+      }
+
       return <div>
         <p style={{fontSize: 30}}>I want withdraw 
         <input
           size={formatUnits(tokenAmount, selectedToken.decimals).length}
           autoFocus
           style={{border: "none", textAlign: "right", outline: "none", fontSize: 30}}
-            onChange={(e) => setTokenAmount(parseUnits(e.target.value, selectedToken.decimals))}
+            onChange={(e) => setTokenAmount(strToBigint(e.target.value, selectedToken.decimals))}
             value={formatUnits(tokenAmount, selectedToken.decimals)}
           ></input>  
         <select style={{border: "none", fontSize: 30, textDecoration: "underline"}} onChange={(e) => setSelectedTokenIdx(e.target.value as any)} value={selectedTokenIdx}>
