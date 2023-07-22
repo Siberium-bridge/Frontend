@@ -6,9 +6,8 @@ import { ABI as siberiumBridgeAbi } from "../abis/siberiumBridge";
 import { formatUnits, parseUnits } from 'viem'
 import styles from '../styles/Utils.module.css';
 
-export const Withdrawal = () => {
+const Withdrawal = () => {
     const { address } = useAccount()
-    if (!address) return;
 
     const supportedTokens = SUPPORTED_TOKENS.siberiumTest;
     const bridgeAddress = SIBERIUM_TEST_BRIDGE;
@@ -24,7 +23,7 @@ export const Withdrawal = () => {
         address: token.address,
         abi: erc20ABI,
         functionName: "balanceOf",
-        args: [address]
+        args: [address!]
       })),
       watch: true,
     })
@@ -84,3 +83,5 @@ export const Withdrawal = () => {
         {withdrawalIsSuccess ? `TX hash: ${withdrawalData?.hash}` : ""}
         </div>
 }
+
+export default Withdrawal;

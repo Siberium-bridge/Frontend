@@ -6,9 +6,8 @@ import { ABI as externalBridgeAbi } from "../abis/externalBridge";
 import { formatUnits, parseUnits } from 'viem'
 import styles from '../styles/Utils.module.css';
 
-export const Deposit = () => {
+const Deposit = () => {
     const { address } = useAccount()
-    if (!address) return;
 
     const supportedTokens = SUPPORTED_TOKENS.goerli;
     const bridgeAddress = GOERLI_BRIDGE;
@@ -24,7 +23,7 @@ export const Deposit = () => {
         address: token.address,
         abi: erc20ABI,
         functionName: "balanceOf",
-        args: [address]
+        args: [address!]
       })),
       watch: true,
     })
@@ -32,7 +31,7 @@ export const Deposit = () => {
       address: selectedToken.address,
       abi: erc20ABI,
       functionName: "allowance",
-      args: [address, bridgeAddress],
+      args: [address!, bridgeAddress],
       watch: true,
     })
     const { data: approveData,  write: sendApprove } = useContractWrite({
@@ -116,3 +115,5 @@ export const Deposit = () => {
         {depositIsSuccess ? `TX hash: ${depositData?.hash}` : ""}
         </div>
 }
+
+export default Deposit;

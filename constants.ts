@@ -1,4 +1,5 @@
-import { Chain, Address } from '@wagmi/core'
+import { Address } from '@wagmi/core'
+import { Chain } from "@rainbow-me/rainbowkit"
 
 export const siberiumTest: Chain = {
     id: 111000,
